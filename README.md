@@ -6,7 +6,7 @@
 1. cd marketing-dashboard (project directory)
 2. npm i (MUST DO FIRST!)
 3. tab 1 (Start Server): ng-serve
-4. tab 2 (Start Testing): ng test --include="**/dashboard.component.spec.ts
+4. tab 2 (Start Testing): ng test --include="**/dashboard.component.spec.ts"
 5. client application will start at <http://localhost:4200/>
 
 # Coding Challenge: Design a Dashboard
