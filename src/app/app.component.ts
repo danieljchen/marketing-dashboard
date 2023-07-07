@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   providers: [DecimalPipe]
 })
 export class AppComponent {
-  title = 'measured';
+  title = 'marketing-dashboard';
 }
