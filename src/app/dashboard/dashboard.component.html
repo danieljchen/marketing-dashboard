@@ -1,0 +1,74 @@
+<div *ngIf="isLoading" class="dashboard">
+    <h1>Loading...</h1>
+    <div class="loading-icon">
+        <img src="assets/loader-simple.gif" alt="Loading...">
+    </div>
+</div>
+<div *ngIf="!isLoading" class="dashboard">
+    <h1>{{ layoutResponse.displayName }}</h1>
+    <div class="metrics-data-container">
+        <div class="metrics-overview">
+            <!-- The Figma design doesn't scale well with more and more data so I took some creative liberties -->
+            <!-- Create tabs -->
+            <div class="metrics-tabs-container">
+                <div class="metrics-tabs" *ngFor="let sectionLabel of sectionLabels; let i = index" (click)="selectedTabEvent(i)" [class.active]="selectedTab === i">
+                    <span>{{ sectionLabel }}</span>
+                </div>
+            </div>
+            <!-- Show the content of the selected tab -->
+            <div class="metrics-row">
+              <ng-container *ngFor="let metric of layoutResponse.layout">
+                <ng-container *ngIf="metric.label === sectionLabels[selectedTab]">
+                  <ng-container *ngFor="let element of metric.elements">
+                    <div class="metric">
+                      <span class="label">{{ fieldDefinitions[element.name]?.label }}</span>
+                      <span class="value" [ngSwitch]="fieldDefinitions[element.name]?.format">
+                        <span *ngSwitchCase="'currency'">
+                          ${{ backendDataResponse.dataPoints[element.name] | number: fieldDefinitions[element.name]?.digitsInfo }}
+                        </span>
+                        <span *ngSwitchCase="'percent'">
+                          {{ backendDataResponse.dataPoints[element.name] | number: fieldDefinitions[element.name]?.digitsInfo }}%
+                        </span>
+                        <span *ngSwitchDefault>
+                          {{ backendDataResponse.dataPoints[element.name] | number }}
+                        </span>
+                      </span>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </div>
+        </div>
+        <div class="summary-table">
+            <div class="metrics-header">
+                <h2>Summary</h2>
+            </div>
+            <!-- Could use any component ui table with built-in sorting and pagination, didn't seem like building one was part of this exercise -->
+            <table>
+                <thead>
+                    <tr>
+                        <th *ngFor="let field of layoutResponse?.layout[3]?.elements[0]?.fields" [ngClass]="{ 'string': fieldDefinitions[field?.name]?.type === 'string' }">
+                            {{ fieldDefinitions[field?.name]?.label || field?.name }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let dataItem of backendDataResponse?.dataSets[0]?.data; let i = index">
+                        <tr [ngClass]="i % 2 === 0 ? 'even' : 'odd'">
+                            <td *ngFor="let field of layoutResponse?.layout[3]?.elements[0]?.fields" [ngClass]="{ 'string': fieldDefinitions[field?.name]?.type === 'string' }">
+                                {{ formatDataTypeValueItem(field?.name, dataItem[field?.name]) }}
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <tr>
+                        <td class="string"><strong>TOTAL</strong></td>
+                        <td *ngFor="let field of layoutResponse?.layout[3]?.elements[0]?.fields.slice(1)">
+                            <strong>{{ calculateAggregate(field?.name) }}</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+  
