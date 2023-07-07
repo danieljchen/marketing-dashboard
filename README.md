@@ -1,3 +1,4 @@
+# Marketing Analytics Dashboard
 >This is a Angular App using TypeScript.
 >Data Source provided as dashboard-mock-response.ts
 
