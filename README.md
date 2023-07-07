@@ -1,8 +1,13 @@
-# Run Coding Challenge Dashboard Specific Test
-Runs on localhost:4200
-Run `ng serve`
-Run `ng test --include="**/dashboard.component.spec.ts`
- -----------------------------------------------------------
+>This is a Angular App using TypeScript.
+>Data Source provided as dashboard-mock-response.ts
+
+## Angular Client Application
+1. cd marketing-dashboard (project directory)
+2. npm i (MUST DO FIRST!)
+3. tab 1 (Start Server): ng-serve
+4. tab 2 (Start Testing): ng test --include="**/dashboard.component.spec.ts
+5. client application will start at <http://localhost:4200/>
+
 # Coding Challenge: Design a Dashboard
 
 [Use this Mockup file](https://www.figma.com/file/81BjV4wM7ULNuep6siNKBm/Interview-Challenge%3A-Design-a-Dashboard?node-id=0%3A1)
@@ -61,10 +66,6 @@ Each widget on the page is referenced in the layout response under the `layout` 
 1. The end result should be a functional Angular Application that can be run on localhost
 
 You have 1 week from today for this challenge. Please reach out if you have any questions.
-
-# Measured
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.3.
 
 ## Development server
 
